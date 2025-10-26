@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #dfe9f3, #ffffff);
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 550px;
+        margin: 2.5rem auto;
+        padding: 1.5rem;
+        border-radius: 18px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: 0.3s ease-in-out;
+        font-size: 0.9rem;
+    }
+
+        .container:hover {
+            transform: translateY(-3px);
+        }
+
+    #publicTalk {
+        background: linear-gradient(135deg, #aef1cf, #d9fdd3);
+        border: thick solid #808080;
+    }
+
+    #groupConversation {
+        background: linear-gradient(135deg, #b3c2ff, #d5d9ff);
+        border: thick solid #808080;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    input[type="text"] {
+        width: 68%;
+        padding: 8px;
+        margin: 4px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        outline: none;
+        transition: 0.2s;
+        font-size: 0.9rem;
+    }
+
+        input[type="text"]:focus {
+            border-color: #0078d4;
+            box-shadow: 0 0 3px rgba(0, 120, 212, 0.3);
+        }
+
+    input[type="submit"] {
+        background-color: #0078d4;
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-left: 4px;
+        transition: 0.3s;
+        font-size: 0.9rem;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #005fa3;
+        }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 10px;
+        max-height: 180px;
+        overflow-y: auto;
+        border-top: 1px solid #ccc;
+    }
+
+        ul li {
+            background-color: #fff;
+            margin: 6px 0;
+            padding: 7px 10px;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+            font-size: 0.85rem;
+        }
+
+    #groupConversation div:first-child,
+    #groupConversation div:nth-child(3) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+</style>
+<script src="~/js/Chat.js"></script>
+<div id="publicTalk" class="container">
+    <h2>💬 Public Talk</h2>
+    <input type="text" id="messageInp" placeholder="Type your message..." />
+    <input type="submit" id="sendMessageBtn" value="Send" />
+    <ul id="conversation"></ul>
+</div>
+
+<div id="groupConversation" class="container">
+    <h2>👥 Group Conversation</h2>
+    <div>
+        <input type="text" id="groupNameInp" placeholder="Enter group name..." />
+        <input type="submit" id="joinGroupBtn" value="Join" />
+    </div>
+    <br />
+    <div>
+        <input type="text" id="messageToGroupInp" placeholder="Type a message to group..." />
+        <input type="submit" id="sendMessageToGroupBtn" value="Send To Group" />
+    </div>
+    <ul id="groupConversationUL"></ul>
+</div>

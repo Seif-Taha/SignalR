@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using SignalR.Contexts;
+using SignalR.Hubs;
+
 namespace SignalR
 {
     public class Program
@@ -6,12 +10,33 @@ namespace SignalR
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            #region Configure Services
             // Add services to the container.
+
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSignalR();
+
+            builder.Services.AddDbContext<ChatDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ChatConnection"));
+            });
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("default", p =>
+                {
+                    p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                });
+            });
+
+            #endregion
 
             var app = builder.Build();
 
+            #region MiddleWares
             // Configure the HTTP request pipeline.
+
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -26,9 +51,15 @@ namespace SignalR
 
             app.UseAuthorization();
 
+            app.UseCors("default");
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapHub<ChatHub>("/chathub");
+
+            #endregion
 
             app.Run();
         }
